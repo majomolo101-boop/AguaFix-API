@@ -1,5 +1,6 @@
 Dockerfile
 .env
+compose.yaml
 .git
 node_modules
 docker
