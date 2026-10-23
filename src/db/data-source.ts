@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { DataSource, DataSourceOptions } from "typeorm";
 import { envs } from "../config/envs";
 import { UserEntity } from "../auth/entities/user.entity";

@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { ReportsModule } from './reports/reports.module';
 import { EmailModule } from './email/email.module';
 import { envs } from './config/envs';
+import { StorageModule } from './storage/storage.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { envs } from './config/envs';
     AuthModule,
     ReportsModule,
     EmailModule,
+    StorageModule,
   ],
   controllers: [AppController],
   providers: [AppService],

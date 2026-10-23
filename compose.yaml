@@ -1,21 +1,68 @@
 services:
+  # migrations:
+  #   image: agua-fix-api-api:latest
+  #   container_name: aguafix-migrator
+  #   env_file:
+  #     - .env
+  #   environment:
+  #     - DB_NAME=${DB_NAME}
+  #     - DB_HOST=${DB_HOST}
+  #     - DB_PASSWORD=${DB_PASSWORD}
+  #     - DB_USER=${DB_USER}
+  #     - DB_PORT=${DB_PORT}
+  #     - REDIS_HOST=${REDIS_HOST}
+  #     - REDIS_PORT=${REDIS_PORT}
+  #     - AWS_REGION=${AWS_REGION}
+  #     - AWS_BUCKET=${AWS_BUCKET}
+  #   command: ["npm", "run", "migration:run"]
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+
+  # api:
+  #   image: agua-fix-api-api:latest
+  #   container_name: aguafix-api
+  #   env_file:
+  #     - .env
+  #   environment:
+  #     - PORT=3000
+  #     - DB_NAME=${DB_NAME}
+  #     - DB_HOST=${DB_HOST}
+  #     - DB_PASSWORD=${DB_PASSWORD}
+  #     - DB_USER=${DB_USER}
+  #     - DB_PORT=${DB_PORT}
+  #     - REDIS_HOST=${REDIS_HOST}
+  #     - REDIS_PORT=${REDIS_PORT}
+  #     - AWS_REGION=${AWS_REGION}
+  #     - AWS_BUCKET=${AWS_BUCKET}
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     migrations:
+  #       condition: service_completed_successfully
+
   postgres:
     image: postgis/postgis:16-master
     container_name: aguafix-postgres
     ports:
-      - 5432:5432
+      - "5432:5432"
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=secret
-      - POSTGRES_DB=agua_fix_db
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
     volumes:
       - postgres_data_db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   redis:
     image: redis
     container_name: aguafix-redis
     ports:
-      - 6379:6379
+      - "6379:6379"
     volumes:
       - redis_data_db:/data
 

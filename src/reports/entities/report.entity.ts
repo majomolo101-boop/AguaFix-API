@@ -22,4 +22,10 @@ export class ReportEntity {
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
+  
+  @Column({ type: 'varchar', name: 'photo_url' })
+  photoUrl: string;
+
+  @Column({ type: 'varchar', name: 'repair_photo_url', nullable: true })
+  repairPhotoUrl: string;
 }

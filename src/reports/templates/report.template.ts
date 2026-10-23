@@ -50,6 +50,21 @@ export function generateReportTemplate(dto: CreateReportDto): string {
               <td style="padding: 12px 14px; color: #111827; background: #f8fafc; vertical-align: top;">${dto.reporterPhone}</td>
             </tr>
           </table>
+
+          ${
+            dto.photoUrl
+              ? `
+                <div style="margin-top: 24px; text-align: center; border-top: 1px solid #e5e7eb; padding-top: 20px;">
+                  <p style="font-family: Arial, sans-serif; font-size: 12px; font-weight: bold; color: #0c4a6e; margin-bottom: 10px;">Evidencia de fuga:</p>
+                  <img 
+                    src="${dto.photoUrl}" 
+                    alt="Evidencia del reporte" 
+                    style="max-width: 100%; height: auto; border-radius: 4px; border: 1px solid #d1d5db;" 
+                  />
+                </div>
+              `
+              : ''
+          }
         </div>
 
         <!-- Footer -->

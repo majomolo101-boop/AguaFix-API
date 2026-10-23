@@ -16,14 +16,14 @@ export class ReportsService {
   ) {}
 
   async create(createReportDto: CreateReportDto) {
-    // 1. Guardar el reporte en la base de datos
+    // 1. Guardar el reporte en la base de datos (el DTO ya trae el photoUrl del controlador)
     const report = this.reportRepository.create(createReportDto);
     const savedReport = await this.reportRepository.save(report);
 
-    // 2. Generar el contenido HTML del correo
+    // 2. Generar el contenido HTML del correo (recibe el DTO que ya incluye la foto)
     const htmlContent = generateReportTemplate(createReportDto);
 
-    // 3. AQUÍ VA EL CÓDIGO: Enviar el correo usando tu configuración de envs
+    // 3. Enviar el correo electrónico
     await this.emailService.sendEmail(
       envs.MAILER_USER, 
       `Nuevo Reporte de Fuga - Severidad: ${createReportDto.severity.toUpperCase()}`,

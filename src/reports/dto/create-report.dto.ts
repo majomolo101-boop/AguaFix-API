@@ -1,4 +1,4 @@
-import { IsString, IsIn, IsNotEmpty } from 'class-validator';
+import { IsString, IsIn, IsNotEmpty, IsOptional } from 'class-validator';
 
 export class CreateReportDto {
   @IsString()
@@ -16,4 +16,8 @@ export class CreateReportDto {
   @IsString()
   @IsNotEmpty()
   reporterPhone: string;
+
+  @IsString()
+  @IsOptional()
+  photoUrl?: string;
 }

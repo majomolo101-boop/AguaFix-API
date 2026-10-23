@@ -4,13 +4,17 @@ import { ReportsService } from './reports.service';
 import { ReportsController } from './reports.controller';
 import { ReportEntity } from './entities/report.entity';
 import { EmailModule } from '../email/email.module';
+import { StorageService } from '../storage/storage.service'; 
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([ReportEntity]),
-    EmailModule, // <--- Necesario para inyectar EmailService
+    EmailModule,
   ],
   controllers: [ReportsController],
-  providers: [ReportsService],
+  providers: [
+    ReportsService, 
+    StorageService, 
+  ],
 })
 export class ReportsModule {}
